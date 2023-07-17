@@ -1,9 +1,9 @@
 var darkmode_btn = document.getElementById("darkmode");
 
-changeMode(readCookie());
+changeMode(readTheme());
 
 async function getProducts() {
-  return await fetch("http://127.0.0.1:3000/getproducts", {method:"GET"}).then(v=>{
+  return await fetch("http://127.0.0.1:3000/getAllProducts", {method:"GET"}).then(v=>{
     console.log(v.body);
     return v.json()
   }).catch((err)=>{console.error(err)});
@@ -46,13 +46,15 @@ function listProducts(products, element) {
 	}
 }
 
-function readCookie() {
-    return document.cookie.split(";")[0].split("=")[1];
+function readTheme() {
+    const value = `; ${document.cookie}`;
+	const parts = value.split(`; theme=`);
+	if (parts.length === 2) return parts.pop().split(';').shift();
 }
 function changeCookie(mode) {
     var date = new Date();
     date.setDate(date.getDate()+30);
-    document.cookie = "theme="+mode+"; expires="+date.toUTCString()+"; path=/";
+    document.cookie = "theme="+mode+"; expires="+date.toUTCString()+"; path=/; SameSite=Strict";
 }
 function changeMode(mode) {
     changeCookie(mode);

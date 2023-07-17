@@ -3,7 +3,9 @@
     position: absolute;
     right: 10px;
 }
-
+.invisible {
+    display: none;
+}
 .card-style {
     width: 200px;
 }
@@ -12,4 +14,16 @@
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     grid-gap: 10px;
+}
+.padded-view {
+    padding: 20%;
+    padding-top: 20px;
+}
+#price {
+    display: inline-block;
+    padding-top: 7px;
+    margin-right: 20px;
+}
+#product-buy {
+    display: inline-block;
 }
