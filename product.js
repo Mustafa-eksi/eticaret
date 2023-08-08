@@ -46,7 +46,7 @@ sepetcikar.addEventListener('click', ()=>{
     sepeteekle.classList.remove("invisible");
 })
 
-fetch("http://127.0.0.1:3000/getProduct", {
+fetch("http://localhost:3001/getProduct", {
     method:"POST",
     headers: { 'Content-Type': 'application/json' },
     body:JSON.stringify({productid:product_id}),
@@ -54,6 +54,8 @@ fetch("http://127.0.0.1:3000/getProduct", {
     document.getElementById("title").textContent = v.urun_ismi;
     document.getElementById("main_category").textContent = v.ana_kategori + " > " + v.ilgili_kategori;
     document.getElementById("price").textContent = v.fiyat + " ₺";
+    var img = document.getElementById("product_img");
+	img.src = "http://localhost:3001/"+(v.index+1)+".png";
     var tbody = document.getElementById("product-tbody");
 
     for(let ozellik in v.ozellikler) {

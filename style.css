@@ -27,3 +27,14 @@
 #product-buy {
     display: inline-block;
 }
+#product {
+    display: flex;
+    flex-direction: row;
+}
+.yarim {
+    margin: 30px;
+}
+#product_img {
+    max-width: 400px;
+    max-height: 700px;
+}

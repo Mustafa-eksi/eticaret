@@ -6,7 +6,7 @@ function getCookie(name) {
 let sepetCookie = getCookie("sepet");
 if(sepetCookie) {
     let sepet = sepetCookie.split(",");
-    fetch("http://127.0.0.1:3000/getProducts", {
+    fetch("http://127.0.0.1:3001/getProducts", {
         method:"POST",
         headers: { 'Content-Type': 'application/json' },
         body:JSON.stringify({products:sepet}),

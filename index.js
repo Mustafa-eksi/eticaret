@@ -3,7 +3,7 @@ var darkmode_btn = document.getElementById("darkmode");
 changeMode(readTheme());
 
 async function getProducts() {
-  return await fetch("http://127.0.0.1:3000/getAllProducts", {method:"GET"}).then(v=>{
+  return await fetch("http://127.0.0.1:3001/getAllProducts", {method:"GET"}).then(v=>{
     console.log(v.body);
     return v.json()
   }).catch((err)=>{console.error(err)});
@@ -24,12 +24,11 @@ function listProducts(products, element) {
 			console.log("clicked")
 			window.location.href = "./pages/product.html?product_id="+products[i]._id;
 		}
-    /*
 			var img = document.createElement("img");
 			img.classList.add("card-img-top");
-			img.src = products[i].image_url;
+			img.src = "http://localhost:3001/"+(products[i].index+1)+".png";
 			card.appendChild(img);
-    */
+			
 			var card_body = document.createElement("div");
 			card_body.classList.add("card-body");
 				var name = document.createElement("h5");
