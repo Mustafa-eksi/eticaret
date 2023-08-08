@@ -23,21 +23,27 @@
                 <a class="nav-link" href="./campaign.html">🏷️ Kampanyalar</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="./sepet.html">🧺 Sepetim</a>
+                <a class="nav-link sepetbuton" href="./sepet.html">🧺 Sepetim<div id="sepet_length"></div></a>
             </li>
         </ul>
         <button type="button" class="btn btn-dark" id="darkmode">🌙</button>
         </div>
     </div>
 </nav>
-<div class="padded-view">
-    <table class="table table-bordered">
-        <tbody id="sepet-tbody">
-        </tbody>
-        <tfoot id="table_foot">
-
-        </tfoot>
-    </table>    
+<div class="sepet-bos-veya-dolu">
+    <div id="sepet_bos">
+        Sepetinizde hiç bir şey yok
+    </div>
+    <div class="padded-view invisible" id="sepet_dolu">
+        <table class="table table-bordered sepettable">
+            <tbody id="sepet-tbody">
+            </tbody>
+            <tfoot id="table_foot">
+    
+            </tfoot>
+        </table>
+        <button class="btn btn-danger" id="sepetbosalt">Sepeti boşalt</button>
+    </div>
 </div>
 <script src="../sepet.js"></script>
 <script src="../index.js"></script>

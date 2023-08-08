@@ -3,8 +3,22 @@ function getCookie(name) {
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
 }
+function switchdivs(switchfrom, switchto) { // switchfrom: html element (must not have "invisible" class), switchto: html element (must have "invisible" class)
+    if(switchto.classList.contains("invisible") === false || switchfrom.classList.contains("invisible") === true) {
+        return console.error("undefined behavior at switchdivs function.");
+    }
+    switchfrom.classList.add("invisible");
+    switchto.classList.remove("invisible");
+}
+
+var sepetbos = document.getElementById("sepet_bos"); // visible at start
+var sepetdolu = document.getElementById("sepet_dolu"); // invisible at start
+
 let sepetCookie = getCookie("sepet");
 if(sepetCookie) {
+    // switch to sepet div
+    switchdivs(sepetbos, sepetdolu);
+    console.log(sepetCookie)
     let sepet = sepetCookie.split(",");
     fetch("http://127.0.0.1:3001/getProducts", {
         method:"POST",
@@ -20,8 +34,17 @@ if(sepetCookie) {
             toplamTutar += parseFloat(v.products[i].fiyat);
             var tr = document.createElement("tr");
             tr.id = "tr"+i;
+            var td0 = document.createElement("td");
+            var image = document.createElement("img");
+            image.src = "http://localhost:3001/"+(v.products[i].index+1)+".png";
+            image.height = 100;
+            image.width = 100;
+            td0.appendChild(image);
             var td1 = document.createElement("td");
-            td1.textContent = v.products[i].urun_ismi;
+            var urunlink = document.createElement("a");
+            urunlink.textContent = v.products[i].urun_ismi;
+            urunlink.href = "http://localhost:8080/pages/product.html?product_id="+v.products[i]._id;
+            td1.appendChild(urunlink);
             var td2 = document.createElement("td");
             td2.textContent = v.products[i].fiyat;
             var td3 = document.createElement("td");
@@ -32,6 +55,9 @@ if(sepetCookie) {
                 var date = new Date();
                 date.setDate(date.getDate()+30);
                 sepet = sepet.filter(e => e !== v.products[i]._id); // arrayden ürünü silme
+                if(sepet.length === 0) { // if last element is deleted
+                    switchdivs(sepetdolu, sepetbos)
+                }
                 document.cookie = "sepet="+sepet.join(",")+"; expires="+date.toUTCString()+"; path=/; SameSite=Strict";
                 document.getElementById("tr"+i).remove(); // satırı silme
                 let yeni_tutar = 0.0;
@@ -41,6 +67,7 @@ if(sepetCookie) {
                 footd.textContent = yeni_tutar.toFixed(2) + " ₺";
             });
             td3.appendChild(sepettenCikar);
+            tr.appendChild(td0);
             tr.appendChild(td1);
             tr.appendChild(td2);
             tr.appendChild(td3);
@@ -53,3 +80,12 @@ if(sepetCookie) {
         table_foot.appendChild(footd);
     });
 }
+
+var sepetbosalt = document.getElementById("sepetbosalt");
+sepetbosalt.addEventListener("click", ()=>{
+    var date = new Date();
+    date.setDate(date.getDate()+30);
+    document.cookie = "sepet=;expires="+date.toUTCString()+"; path=/; SameSite=Strict";
+    // switch to sepetbos because sepet cookie is empty.
+    switchdivs(sepetdolu, sepetbos); // FIXME: undefined behavior when trying to clear sepet while it is already empty
+})

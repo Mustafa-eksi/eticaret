@@ -64,3 +64,16 @@ function changeMode(mode) {
 }
 
 darkmode_btn.addEventListener('click',()=>changeMode(darkmode_btn.innerText === "🌙" ? "dark" : "light"))
+
+function getCookie(name) {
+	const value = `; ${document.cookie}`;
+	const parts = value.split(`; ${name}=`);
+	if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+function getSepet() { // function to get sepet, then display it like a badge or smth.
+	return getCookie("sepet") === "" ? 0 : getCookie("sepet").split(",").length;
+}
+
+var sepet_length = document.getElementById("sepet_length");
+sepet_length.textContent = getSepet();
